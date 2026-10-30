@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Bookmark, Sun, Moon, RefreshCw, Compass, Sparkles } from 'lucide-react';
+import { UtensilsCrossed, Bookmark, Sun, Moon, Sparkles, RefreshCw } from 'lucide-react';
 
 interface NavbarProps {
   darkMode: boolean;
@@ -20,108 +20,68 @@ export const Navbar: React.FC<NavbarProps> = ({
   onRefresh,
   isLoading
 }) => {
-  const currentDate = new Date().toLocaleDateString('vi-VN', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  });
-
   return (
-    <header className="w-full bg-linen-100 dark:bg-espresso-950 border-b border-linen-300 dark:border-espresso-850 transition-colors">
-      
-      {/* Top Editorial Gazette Bar */}
-      <div className="border-b border-linen-200 dark:border-espresso-900/60 py-1.5 px-4 sm:px-8 text-[11px] text-linen-800/70 dark:text-linen-400 flex flex-wrap items-center justify-between gap-2 uppercase tracking-widest font-mono">
-        <div className="flex items-center gap-3">
-          <span className="font-semibold text-terracotta-700 dark:text-terracotta-400">Issue № 42</span>
-          <span className="hidden sm:inline">•</span>
-          <span className="hidden sm:inline">{currentDate}</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <span className="flex items-center gap-1.5 text-terracotta-600 dark:text-terracotta-400 font-medium">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            RSS Feeds Live Caching
-          </span>
-          <span className="hidden md:inline text-linen-500">•</span>
-          <span className="hidden md:inline">Vietnam & World Gastronomy</span>
-        </div>
-      </div>
-
-      {/* Main Masthead Banner */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
+    <header className="sticky top-0 z-30 w-full backdrop-blur-md bg-white/90 dark:bg-neutral-900/90 border-b border-stone-200 dark:border-neutral-800 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         
-        {/* Left Side: Edition info */}
-        <div className="hidden lg:flex items-center gap-3 text-xs text-linen-800/80 dark:text-linen-400">
-          <div className="p-2.5 rounded-xl border border-linen-300 dark:border-espresso-800 bg-linen-50 dark:bg-espresso-900 shadow-sm">
-            <Compass className="w-4 h-4 text-terracotta-700 dark:text-terracotta-400" />
+        {/* Brand Logo & Name */}
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-orange-500/20">
+            <UtensilsCrossed className="w-5 h-5" />
           </div>
-          <div className="leading-tight">
-            <div className="font-serif font-bold text-linen-900 dark:text-linen-200">The Taste Curator</div>
-            <div className="text-[11px] text-linen-500">Chắt lọc từ 5 nguồn báo lớn</div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500 bg-clip-text text-transparent">
+                BiteCraft
+              </span>
+              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 dark:bg-orange-950/80 dark:text-orange-300">
+                Culinary News
+              </span>
+            </div>
+            <p className="text-xs text-stone-500 dark:text-neutral-400 hidden sm:block">
+              Tổng hợp tin tức & Đọc tinh gọn không quảng cáo
+            </p>
           </div>
         </div>
 
-        {/* Center: Signature Brand Title */}
-        <div className="text-center group cursor-pointer">
-          <div className="inline-flex items-center gap-2 mb-1">
-            <span className="h-[1px] w-6 sm:w-10 bg-terracotta-700/40 dark:bg-terracotta-400/40" />
-            <span className="text-[10px] tracking-[0.25em] font-mono uppercase text-terracotta-700 dark:text-terracotta-400 font-bold">
-              Culinary Gazette
-            </span>
-            <span className="h-[1px] w-6 sm:w-10 bg-terracotta-700/40 dark:bg-terracotta-400/40" />
-          </div>
-          
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-linen-900 dark:text-linen-50 hover:text-terracotta-700 transition-colors">
-            B I T E C R A F T
-          </h1>
-          
-          <p className="font-serif italic text-xs sm:text-sm text-linen-800/80 dark:text-linen-300 mt-1 max-w-md mx-auto">
-            &ldquo;Hương vị cuộc sống qua lăng kính tinh tuyển và trải nghiệm đọc tinh gọn&rdquo;
-          </p>
-        </div>
-
-        {/* Right Side: Tools & Actions */}
+        {/* Action Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
-          
-          {/* Refresh Action */}
+          {/* Refresh Button */}
           <button
             onClick={onRefresh}
             disabled={isLoading}
-            className="p-2 sm:px-3 sm:py-2 rounded-full border border-linen-300 dark:border-espresso-800 bg-linen-50 dark:bg-espresso-900 hover:border-terracotta-500 hover:bg-linen-200/60 dark:hover:bg-espresso-850 transition-all text-linen-800 dark:text-linen-200 flex items-center gap-2 text-xs font-medium shadow-sm disabled:opacity-50"
-            title="Làm mới tin tức mới nhất từ RSS"
+            title="Làm mới tin tức mới nhất"
+            className="p-2 rounded-lg text-stone-600 dark:text-neutral-300 hover:bg-stone-100 dark:hover:bg-neutral-800 transition-colors disabled:opacity-50"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-terracotta-600' : ''}`} />
-            <span className="hidden sm:inline">Cập nhật tin</span>
+            <RefreshCw className={`w-5 h-5 ${isLoading ? 'animate-spin text-orange-600' : ''}`} />
           </button>
 
-          {/* Bookmarks Pill */}
+          {/* Bookmarks Button */}
           <button
             onClick={onOpenBookmarks}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-linen-300 dark:border-espresso-800 bg-linen-50 dark:bg-espresso-900 hover:border-terracotta-500 hover:bg-linen-200/60 dark:hover:bg-espresso-850 transition-all text-linen-900 dark:text-linen-100 text-xs font-semibold shadow-sm"
-            title="Xem danh sách bài viết đã lưu"
+            className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-stone-700 dark:text-neutral-200 hover:bg-stone-100 dark:hover:bg-neutral-800 transition-colors text-sm font-medium"
+            title="Danh sách bài viết đã lưu"
           >
-            <Bookmark className="w-3.5 h-3.5 text-terracotta-700 dark:text-terracotta-400 fill-terracotta-700/20" />
-            <span>Sổ tay</span>
+            <Bookmark className="w-4 h-4 text-orange-600" />
+            <span className="hidden sm:inline">Đã lưu</span>
             {bookmarkCount > 0 && (
-              <span className="px-1.5 py-0.5 rounded-full bg-terracotta-700 text-white text-[10px] font-bold leading-none">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-600 text-[11px] font-bold text-white">
                 {bookmarkCount}
               </span>
             )}
           </button>
 
-          {/* Theme Toggle */}
+          {/* Dark Mode Toggle */}
           <button
             onClick={onToggleDarkMode}
-            className="p-2 rounded-full border border-linen-300 dark:border-espresso-800 bg-linen-50 dark:bg-espresso-900 hover:border-terracotta-500 text-linen-800 dark:text-linen-200 transition-all shadow-sm"
-            title={darkMode ? 'Chuyển sang giao diện Sáng' : 'Chuyển sang giao diện Đêm'}
+            className="p-2 rounded-lg text-stone-600 dark:text-neutral-300 hover:bg-stone-100 dark:hover:bg-neutral-800 transition-colors"
+            title={darkMode ? 'Chuyển sang giao diện Sáng' : 'Chuyển sang giao diện Tối'}
           >
-            {darkMode ? <Sun className="w-4 h-4 text-saffron-400" /> : <Moon className="w-4 h-4 text-linen-800" />}
+            {darkMode ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5" />}
           </button>
-
         </div>
 
       </div>
-
     </header>
   );
 };

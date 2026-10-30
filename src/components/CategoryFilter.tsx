@@ -32,13 +32,8 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
   };
 
   return (
-    <div className="w-full border-y border-linen-300 dark:border-espresso-800 py-3 mb-6 bg-linen-50/50 dark:bg-espresso-950/40">
-      <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1">
-        
-        <span className="text-[11px] font-mono uppercase tracking-widest text-linen-500 font-bold px-2 shrink-0">
-          Mục lục / Menu:
-        </span>
-
+    <div className="w-full overflow-x-auto pb-2 scrollbar-none">
+      <div className="flex items-center gap-2 min-w-max">
         {CATEGORIES.map((cat) => {
           const isSelected = selectedCategory === cat.id;
           const count = categoryCounts[cat.id] || 0;
@@ -47,21 +42,21 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
             <button
               key={cat.id}
               onClick={() => onSelectCategory(cat.id)}
-              className={`group flex items-center gap-2.5 px-4 py-2 rounded-full text-xs font-medium transition-all duration-200 shrink-0 border ${
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-200 border ${
                 isSelected
-                  ? 'bg-linen-900 text-white border-linen-900 dark:bg-linen-100 dark:text-espresso-950 dark:border-linen-100 shadow-md font-semibold'
-                  : 'bg-white dark:bg-espresso-900 text-linen-800 dark:text-linen-300 border-linen-300 dark:border-espresso-800 hover:border-terracotta-400 dark:hover:border-terracotta-500/50'
+                  ? 'bg-orange-600 text-white border-orange-600 shadow-md shadow-orange-600/25 ring-2 ring-orange-600/20'
+                  : 'bg-white dark:bg-neutral-800 text-stone-700 dark:text-neutral-200 border-stone-200 dark:border-neutral-700 hover:border-orange-300 dark:hover:border-neutral-600 hover:bg-stone-50 dark:hover:bg-neutral-750'
               }`}
             >
-              <span className={isSelected ? 'text-terracotta-400 dark:text-terracotta-600' : 'text-terracotta-700 dark:text-terracotta-400 group-hover:scale-110 transition-transform'}>
+              <span className={isSelected ? 'text-white' : 'text-orange-600 dark:text-orange-400'}>
                 {getIcon(cat.id)}
               </span>
               <span>{cat.name}</span>
               <span
-                className={`font-mono text-[10px] px-1.5 py-0.5 rounded-full ${
+                className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
                   isSelected
-                    ? 'bg-white/20 text-white dark:bg-espresso-900/40 dark:text-espresso-950'
-                    : 'bg-linen-200 dark:bg-espresso-800 text-linen-700 dark:text-linen-400'
+                    ? 'bg-white/20 text-white'
+                    : 'bg-stone-100 dark:bg-neutral-700 text-stone-600 dark:text-neutral-300'
                 }`}
               >
                 {count}

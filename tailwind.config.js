@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        terracotta: {
+        brand: {
           50: '#fff7ed',
           100: '#ffedd5',
           200: '#fed7aa',
@@ -21,32 +21,19 @@ module.exports = {
           800: '#9a3412',
           900: '#7c2d12',
         },
-        saffron: {
-          400: '#FBBF24',
-          500: '#F59E0B',
-          600: '#D97706',
-        },
-        linen: {
-          50: '#FDFCF9',
-          100: '#FAF8F5',
-          200: '#F3EFEA',
-          300: '#E8E2D9',
-          400: '#D6CEC5',
-          500: '#B0A597',
-          800: '#3D342A',
-          900: '#26211C',
-        },
-        espresso: {
-          800: '#231D18',
-          850: '#1C1713',
-          900: '#14110E',
-          950: '#0C0A08',
+        sepia: {
+          50: '#fbf9f5',
+          100: '#f7f3eb',
+          200: '#efe6d5',
+          300: '#e3d4b9',
+          400: '#cdb58f',
+          800: '#433829',
+          900: '#2b2318',
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
-        display: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['Merriweather', 'Georgia', 'serif'],
       }
     },
   },
