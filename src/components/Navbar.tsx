@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { UtensilsCrossed, Bookmark, Sun, Moon, Sparkles, RefreshCw } from 'lucide-react';
+import { Bookmark, Sun, Moon, RefreshCw, Sprout, Heart } from 'lucide-react';
 
 interface NavbarProps {
   darkMode: boolean;
@@ -21,64 +21,90 @@ export const Navbar: React.FC<NavbarProps> = ({
   isLoading
 }) => {
   return (
-    <header className="sticky top-0 z-30 w-full backdrop-blur-md bg-white/90 dark:bg-neutral-900/90 border-b border-stone-200 dark:border-neutral-800 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/95 dark:bg-forest-900/95 border-b border-sage-200 dark:border-forest-800 transition-colors shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between gap-4">
         
-        {/* Brand Logo & Name */}
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-orange-500/20">
-            <UtensilsCrossed className="w-5 h-5" />
+        {/* Foodily Signature Logo */}
+        <div className="flex items-center gap-3 cursor-pointer group">
+          <div className="relative flex items-center justify-center">
+            {/* Organic Circle Accent */}
+            <div className="w-11 h-11 rounded-2xl bg-sage-100 dark:bg-sage-900/60 flex items-center justify-center text-sage-600 dark:text-sage-400 group-hover:scale-105 transition-transform shadow-inner">
+              <Sprout className="w-6 h-6 stroke-[2.2]" />
+            </div>
+            {/* Cute dot badge */}
+            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-coral-500 border-2 border-white dark:border-forest-900" />
           </div>
+
           <div>
-            <div className="flex items-center gap-2">
-              <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500 bg-clip-text text-transparent">
-                BiteCraft
+            <div className="flex items-baseline gap-1">
+              <span className="font-extrabold text-2xl tracking-tight text-sage-700 dark:text-sage-300 group-hover:text-coral-500 transition-colors">
+                Foodily
               </span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 dark:bg-orange-950/80 dark:text-orange-300">
-                Culinary News
+              <span className="text-xs font-semibold text-coral-500 tracking-wider">
+                .vn
               </span>
             </div>
-            <p className="text-xs text-stone-500 dark:text-neutral-400 hidden sm:block">
-              Tổng hợp tin tức & Đọc tinh gọn không quảng cáo
+            <p className="text-[11px] font-medium text-sage-600/80 dark:text-sage-400/80 -mt-0.5 hidden sm:block">
+              Tạp chí ẩm thực & Đọc tinh gọn không quảng cáo
             </p>
           </div>
         </div>
 
-        {/* Action Controls */}
+        {/* Center Tagline Pills (Desktop) */}
+        <div className="hidden lg:flex items-center gap-6 text-xs font-medium text-sage-700 dark:text-sage-300">
+          <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage-50 dark:bg-forest-850 border border-sage-200 dark:border-forest-800">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            RSS feeds cập nhật trực tiếp
+          </span>
+          <span className="hover:text-coral-500 transition-colors cursor-pointer">
+            Món ngon mỗi ngày
+          </span>
+          <span className="hover:text-coral-500 transition-colors cursor-pointer">
+            Quán xá chọn lọc
+          </span>
+          <span className="hover:text-coral-500 transition-colors cursor-pointer">
+            Chế độ đọc sạch
+          </span>
+        </div>
+
+        {/* Right Action Tools */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Refresh Button */}
+          
+          {/* Refresh Action */}
           <button
             onClick={onRefresh}
             disabled={isLoading}
-            title="Làm mới tin tức mới nhất"
-            className="p-2 rounded-lg text-stone-600 dark:text-neutral-300 hover:bg-stone-100 dark:hover:bg-neutral-800 transition-colors disabled:opacity-50"
+            className="p-2 sm:px-3 sm:py-2 rounded-full border border-sage-200 dark:border-forest-800 bg-sage-50/60 dark:bg-forest-850 hover:bg-sage-100 dark:hover:bg-forest-800 text-sage-700 dark:text-sage-300 transition-all flex items-center gap-1.5 text-xs font-semibold disabled:opacity-50"
+            title="Làm mới tin tức ẩm thực"
           >
-            <RefreshCw className={`w-5 h-5 ${isLoading ? 'animate-spin text-orange-600' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-coral-500' : ''}`} />
+            <span className="hidden sm:inline">Cập nhật</span>
           </button>
 
-          {/* Bookmarks Button */}
+          {/* Sổ tay yêu thích (Bookmarks) */}
           <button
             onClick={onOpenBookmarks}
-            className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-stone-700 dark:text-neutral-200 hover:bg-stone-100 dark:hover:bg-neutral-800 transition-colors text-sm font-medium"
-            title="Danh sách bài viết đã lưu"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-coral-500 hover:bg-coral-600 text-white transition-all text-xs font-semibold shadow-md shadow-coral-500/25"
+            title="Mở danh sách bài viết đã lưu"
           >
-            <Bookmark className="w-4 h-4 text-orange-600" />
-            <span className="hidden sm:inline">Đã lưu</span>
+            <Heart className="w-3.5 h-3.5 fill-white" />
+            <span>Món đã lưu</span>
             {bookmarkCount > 0 && (
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-600 text-[11px] font-bold text-white">
+              <span className="px-1.5 py-0.2 rounded-full bg-white text-coral-600 text-[10px] font-bold">
                 {bookmarkCount}
               </span>
             )}
           </button>
 
-          {/* Dark Mode Toggle */}
+          {/* Theme Toggle */}
           <button
             onClick={onToggleDarkMode}
-            className="p-2 rounded-lg text-stone-600 dark:text-neutral-300 hover:bg-stone-100 dark:hover:bg-neutral-800 transition-colors"
+            className="p-2 rounded-full border border-sage-200 dark:border-forest-800 bg-sage-50/60 dark:bg-forest-850 hover:bg-sage-100 text-sage-700 dark:text-sage-300 transition-all"
             title={darkMode ? 'Chuyển sang giao diện Sáng' : 'Chuyển sang giao diện Tối'}
           >
-            {darkMode ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5" />}
+            {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
           </button>
+
         </div>
 
       </div>

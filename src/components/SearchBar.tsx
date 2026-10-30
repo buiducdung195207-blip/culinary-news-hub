@@ -25,23 +25,23 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   totalResults
 }) => {
   return (
-    <div className="bg-white dark:bg-neutral-850 p-4 rounded-2xl border border-stone-200 dark:border-neutral-800 shadow-sm space-y-3">
+    <div className="bg-white dark:bg-forest-850 p-4 rounded-3xl border border-sage-200 dark:border-forest-750 shadow-sm space-y-3 mb-8">
       <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
         
         {/* Input Tìm kiếm */}
         <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-sage-400" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Tìm theo món ăn, quán ngon, công thức, mẹo vặt..."
-            className="w-full pl-10 pr-9 py-2.5 rounded-xl border border-stone-200 dark:border-neutral-700 bg-stone-50/50 dark:bg-neutral-800 text-stone-900 dark:text-neutral-100 placeholder-stone-400 dark:placeholder-neutral-400 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500 transition-all"
+            placeholder="Tìm món ăn, công thức nấu nướng, quán ngon, mẹo vặt..."
+            className="w-full pl-11 pr-10 py-2.5 rounded-2xl border border-sage-200 dark:border-forest-700 bg-sage-50/50 dark:bg-forest-900 text-sage-900 dark:text-cream-100 placeholder-sage-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sage-500/30 focus:border-sage-500 transition-all font-sans"
           />
           {searchQuery && (
             <button
               onClick={() => onSearchChange('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-sage-400 hover:text-sage-700 dark:hover:text-cream-200"
             >
               <X className="w-4 h-4" />
             </button>
@@ -55,7 +55,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             <select
               value={selectedSource}
               onChange={(e) => onSourceChange(e.target.value)}
-              className="w-full appearance-none pl-3 pr-8 py-2.5 rounded-xl border border-stone-200 dark:border-neutral-700 bg-stone-50/50 dark:bg-neutral-800 text-stone-800 dark:text-neutral-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40 cursor-pointer"
+              className="w-full appearance-none pl-3.5 pr-8 py-2.5 rounded-2xl border border-sage-200 dark:border-forest-700 bg-sage-50/50 dark:bg-forest-900 text-sage-800 dark:text-cream-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sage-500/30 cursor-pointer font-sans"
             >
               <option value="all">Tất cả nguồn báo</option>
               {sourcesList.map((source) => (
@@ -64,33 +64,33 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 </option>
               ))}
             </select>
-            <SlidersHorizontal className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-stone-400" />
+            <SlidersHorizontal className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-sage-400" />
           </div>
 
           {/* Sắp xếp */}
-          <div className="relative flex-1 md:w-40">
+          <div className="relative flex-1 md:w-44">
             <select
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value)}
-              className="w-full appearance-none pl-3 pr-8 py-2.5 rounded-xl border border-stone-200 dark:border-neutral-700 bg-stone-50/50 dark:bg-neutral-800 text-stone-800 dark:text-neutral-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40 cursor-pointer"
+              className="w-full appearance-none pl-3.5 pr-8 py-2.5 rounded-2xl border border-sage-200 dark:border-forest-700 bg-sage-50/50 dark:bg-forest-900 text-sage-800 dark:text-cream-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sage-500/30 cursor-pointer font-sans"
             >
-              <option value="newest">Mới nhất</option>
+              <option value="newest">Mới cập nhật</option>
               <option value="readTime">Thời gian đọc dài</option>
             </select>
-            <ArrowUpDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-stone-400" />
+            <ArrowUpDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-sage-400" />
           </div>
         </div>
 
       </div>
 
       {/* Thông tin tìm kiếm */}
-      <div className="flex items-center justify-between text-xs text-stone-500 dark:text-neutral-400 px-1">
+      <div className="flex items-center justify-between text-xs text-sage-600 dark:text-sage-400 px-1 pt-1 border-t border-sage-100 dark:border-forest-800">
         <span>
-          Tìm thấy <strong className="text-orange-600 dark:text-orange-400 font-bold">{totalResults}</strong> bài viết phù hợp
+          Đang hiển thị <strong className="text-coral-500 font-bold">{totalResults}</strong> bài viết ẩm thực
         </span>
         {searchQuery && (
           <span className="italic">
-            Kết quả cho từ khóa &quot;{searchQuery}&quot;
+            Kết quả cho: &ldquo;{searchQuery}&rdquo;
           </span>
         )}
       </div>

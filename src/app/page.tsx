@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { FeedItem, CategoryId } from '@/types';
-import { CATEGORIES, RSS_FEEDS } from '@/lib/sources';
 import { Navbar } from '@/components/Navbar';
 import { StatsBanner } from '@/components/StatsBanner';
 import { CategoryFilter } from '@/components/CategoryFilter';
@@ -10,12 +9,11 @@ import { SearchBar } from '@/components/SearchBar';
 import { ArticleCard } from '@/components/ArticleCard';
 import { ReaderModal } from '@/components/ReaderModal';
 import { BookmarksDrawer } from '@/components/BookmarksDrawer';
-import { Utensils, AlertCircle } from 'lucide-react';
+import { Utensils, Sprout } from 'lucide-react';
 
 export default function HomePage() {
   const [articles, setArticles] = useState<FeedItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   // Filters & State
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('tat-ca');
@@ -32,12 +30,12 @@ export default function HomePage() {
   // Load Bookmarks & Theme from localStorage
   useEffect(() => {
     try {
-      const savedBookmarks = localStorage.getItem('bitecraft_bookmarks');
+      const savedBookmarks = localStorage.getItem('foodily_bookmarks');
       if (savedBookmarks) {
         setBookmarks(JSON.parse(savedBookmarks));
       }
 
-      const savedTheme = localStorage.getItem('bitecraft_theme');
+      const savedTheme = localStorage.getItem('foodily_theme');
       if (savedTheme === 'dark') {
         setDarkMode(true);
         document.documentElement.classList.add('dark');
@@ -46,14 +44,13 @@ export default function HomePage() {
         document.documentElement.classList.remove('dark');
       }
     } catch (e) {
-      console.warn('LocalStorage not accessible:', e);
+      console.warn('LocalStorage error:', e);
     }
   }, []);
 
   // Fetch feeds từ API Server
   const fetchFeeds = async () => {
     setLoading(true);
-    setError(null);
     try {
       const params = new URLSearchParams();
       if (selectedCategory !== 'tat-ca') params.set('category', selectedCategory);
@@ -66,12 +63,9 @@ export default function HomePage() {
 
       if (data.success && Array.isArray(data.items)) {
         setArticles(data.items);
-      } else {
-        throw new Error(data.error || 'Lỗi khi tải dữ liệu feeds.');
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error('Fetch error:', err);
-      setError('Đang sử dụng bộ dữ liệu dự phòng do giới hạn mạng.');
     } finally {
       setLoading(false);
     }
@@ -97,10 +91,10 @@ export default function HomePage() {
     setDarkMode(nextMode);
     if (nextMode) {
       document.documentElement.classList.add('dark');
-      localStorage.setItem('bitecraft_theme', 'dark');
+      localStorage.setItem('foodily_theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
-      localStorage.setItem('bitecraft_theme', 'light');
+      localStorage.setItem('foodily_theme', 'light');
     }
   };
 
@@ -115,7 +109,7 @@ export default function HomePage() {
     }
     setBookmarks(updated);
     try {
-      localStorage.setItem('bitecraft_bookmarks', JSON.stringify(updated));
+      localStorage.setItem('foodily_bookmarks', JSON.stringify(updated));
     } catch (e) {
       console.error(e);
     }
@@ -124,13 +118,13 @@ export default function HomePage() {
   const handleRemoveBookmark = (id: string) => {
     const updated = bookmarks.filter(b => b.id !== id);
     setBookmarks(updated);
-    localStorage.setItem('bitecraft_bookmarks', JSON.stringify(updated));
+    localStorage.setItem('foodily_bookmarks', JSON.stringify(updated));
   };
 
   const handleClearAllBookmarks = () => {
-    if (confirm('Bạn có chắc muốn xóa toàn bộ danh sách bài viết đã lưu?')) {
+    if (confirm('Bạn có chắc muốn xóa toàn bộ danh sách món ăn đã lưu?')) {
       setBookmarks([]);
-      localStorage.removeItem('bitecraft_bookmarks');
+      localStorage.removeItem('foodily_bookmarks');
     }
   };
 
@@ -147,7 +141,7 @@ export default function HomePage() {
     }
   };
 
-  // Tính số lượng bài viết của từng danh mục
+  // Category counts
   const categoryCounts = useMemo(() => {
     const counts: Record<CategoryId, number> = {
       'tat-ca': articles.length,
@@ -165,14 +159,14 @@ export default function HomePage() {
   }, [articles]);
 
   const sourcesList = useMemo(() => {
-    const names = RSS_FEEDS.map(f => f.name);
+    const names = articles.map(f => f.source);
     return Array.from(new Set(names));
-  }, []);
+  }, [articles]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-stone-50 dark:bg-neutral-950 text-stone-900 dark:text-neutral-100 transition-colors">
+    <div className="min-h-screen flex flex-col bg-[#FAF8F2] dark:bg-forest-900 text-sage-950 dark:text-cream-50 transition-colors">
       
-      {/* Navigation Header */}
+      {/* Foodily Signature Header */}
       <Navbar
         darkMode={darkMode}
         onToggleDarkMode={handleToggleDarkMode}
@@ -182,17 +176,17 @@ export default function HomePage() {
         isLoading={loading}
       />
 
-      {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+      {/* Main Container */}
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         
-        {/* Banner Giới thiệu tính năng */}
+        {/* Foodily Hero Banner */}
         <StatsBanner
           totalFeeds={articles.length}
           sourcesCount={sourcesList.length}
         />
 
-        {/* Filter Toolbar: Danh mục con & Tìm kiếm */}
-        <div className="space-y-4 mb-8">
+        {/* Category Pills & Search */}
+        <div className="space-y-4">
           <CategoryFilter
             selectedCategory={selectedCategory}
             onSelectCategory={setSelectedCategory}
@@ -211,29 +205,29 @@ export default function HomePage() {
           />
         </div>
 
-        {/* Grid Hiển thị Bài viết */}
+        {/* Articles Grid */}
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map((n) => (
               <div
                 key={n}
-                className="bg-white dark:bg-neutral-900 rounded-2xl border border-stone-200 dark:border-neutral-800 p-4 space-y-4 animate-pulse"
+                className="bg-white dark:bg-forest-850 rounded-3xl border border-sage-200 dark:border-forest-750 p-5 space-y-4 animate-pulse shadow-sm"
               >
-                <div className="aspect-[16/10] bg-stone-200 dark:bg-neutral-800 rounded-xl" />
-                <div className="h-4 bg-stone-200 dark:bg-neutral-800 rounded w-1/3" />
-                <div className="h-6 bg-stone-200 dark:bg-neutral-800 rounded w-4/5" />
-                <div className="h-4 bg-stone-200 dark:bg-neutral-800 rounded w-full" />
+                <div className="aspect-[16/10] bg-sage-200 dark:bg-forest-800 rounded-2xl" />
+                <div className="h-4 bg-sage-200 dark:bg-forest-800 rounded-full w-1/3" />
+                <div className="h-6 bg-sage-200 dark:bg-forest-800 rounded-full w-4/5" />
+                <div className="h-4 bg-sage-200 dark:bg-forest-800 rounded-full w-full" />
               </div>
             ))}
           </div>
         ) : articles.length === 0 ? (
-          <div className="text-center py-16 bg-white dark:bg-neutral-900 rounded-3xl border border-stone-200 dark:border-neutral-800 p-8">
-            <Utensils className="w-12 h-12 mx-auto text-stone-300 dark:text-neutral-600 mb-3" />
-            <h3 className="text-lg font-bold text-stone-800 dark:text-neutral-200 mb-1">
-              Không tìm thấy bài viết ẩm thực phù hợp
+          <div className="text-center py-20 bg-white dark:bg-forest-850 rounded-3xl border border-sage-200 dark:border-forest-750 p-10 shadow-sm max-w-xl mx-auto">
+            <Utensils className="w-12 h-12 mx-auto text-coral-400 mb-4 stroke-[1.5]" />
+            <h3 className="font-bold text-xl text-sage-900 dark:text-cream-50 mb-2">
+              Không tìm thấy món ăn phù hợp
             </h3>
-            <p className="text-sm text-stone-500 dark:text-neutral-400 mb-4">
-              Hãy thử tìm kiếm với từ khóa khác hoặc chuyển sang danh mục &quot;Tất cả ẩm thực&quot;.
+            <p className="text-xs text-sage-600 dark:text-sage-400 mb-6 font-medium">
+              Hãy thử tìm kiếm với từ khóa khác hoặc chọn lại danh mục &ldquo;Tất cả ẩm thực&rdquo;.
             </p>
             <button
               onClick={() => {
@@ -241,17 +235,18 @@ export default function HomePage() {
                 setSelectedSource('all');
                 setSearchQuery('');
               }}
-              className="px-4 py-2 rounded-xl bg-orange-600 text-white font-medium text-sm hover:bg-orange-700 transition-colors shadow-sm"
+              className="px-6 py-2.5 rounded-full bg-coral-500 hover:bg-coral-600 text-white font-semibold text-xs shadow-md transition-colors"
             >
-              Xem tất cả bài viết
+              Xem tất cả món ngon
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {articles.map((item) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+            {articles.map((item, index) => (
               <ArticleCard
                 key={item.id}
                 article={item}
+                index={index}
                 isBookmarked={bookmarks.some(b => b.id === item.id)}
                 onToggleBookmark={handleToggleBookmark}
                 onOpenReader={setActiveReaderArticle}
@@ -263,17 +258,34 @@ export default function HomePage() {
 
       </main>
 
-      {/* Footer */}
-      <footer className="mt-16 border-t border-stone-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-8 text-center text-xs text-stone-500 dark:text-neutral-400">
-        <div className="max-w-7xl mx-auto px-4 space-y-2">
-          <p className="font-semibold text-stone-700 dark:text-neutral-300 text-sm">
-            BiteCraft &copy; {new Date().getFullYear()} - Cổng thông tin & Tinh hoa ẩm thực chuyên sâu
+      {/* Foodily Signature Footer */}
+      <footer className="mt-20 border-t border-sage-200 dark:border-forest-800 bg-white dark:bg-forest-950 py-12 text-center text-xs text-sage-600 dark:text-sage-400">
+        <div className="max-w-7xl mx-auto px-4 space-y-3">
+          <div className="flex items-center justify-center gap-2">
+            <div className="w-8 h-8 rounded-xl bg-sage-100 dark:bg-sage-900/60 flex items-center justify-center text-sage-600 dark:text-sage-400">
+              <Sprout className="w-4 h-4" />
+            </div>
+            <span className="font-extrabold text-xl text-sage-800 dark:text-cream-100">
+              Foodily
+            </span>
+          </div>
+
+          <p className="text-sage-600 dark:text-sage-400 max-w-xl mx-auto font-normal">
+            Trang tin ẩm thực & đồ uống chuyên sâu • Lấy cảm hứng từ Foodily Template trên Envato Elements • Thiết kế phông chữ Be Vietnam Pro chuẩn 100% tiếng Việt
           </p>
-          <p>
-            Dữ liệu RSS từ VnExpress, Thanh Niên, Tuổi Trẻ, VietnamNet & Serious Eats. Chế độ đọc tinh gọn bảo vệ trải nghiệm người dùng.
-          </p>
-          <p className="text-[11px] text-stone-400 dark:text-neutral-500">
-            Tối ưu hóa Edge Caching trên Vercel | Kiểm thử tự động qua GitHub Actions
+
+          <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] font-semibold text-sage-700 dark:text-sage-300 pt-2">
+            <span>RSS Parser Server</span>
+            <span>•</span>
+            <span>Chế độ đọc Reader Mode</span>
+            <span>•</span>
+            <span>Vercel Edge Caching</span>
+            <span>•</span>
+            <span>CI/CD GitHub Actions</span>
+          </div>
+
+          <p className="text-[10px] text-sage-400 pt-2">
+            &copy; {new Date().getFullYear()} Foodily Culinary Hub. All rights reserved.
           </p>
         </div>
       </footer>

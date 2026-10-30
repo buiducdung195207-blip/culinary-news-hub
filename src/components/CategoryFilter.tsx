@@ -32,8 +32,8 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
   };
 
   return (
-    <div className="w-full overflow-x-auto pb-2 scrollbar-none">
-      <div className="flex items-center gap-2 min-w-max">
+    <div className="w-full overflow-x-auto pb-2 scrollbar-none mb-4">
+      <div className="flex items-center gap-2.5 min-w-max">
         {CATEGORIES.map((cat) => {
           const isSelected = selectedCategory === cat.id;
           const count = categoryCounts[cat.id] || 0;
@@ -42,21 +42,21 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
             <button
               key={cat.id}
               onClick={() => onSelectCategory(cat.id)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-200 border ${
+              className={`flex items-center gap-2.5 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all duration-200 border ${
                 isSelected
-                  ? 'bg-orange-600 text-white border-orange-600 shadow-md shadow-orange-600/25 ring-2 ring-orange-600/20'
-                  : 'bg-white dark:bg-neutral-800 text-stone-700 dark:text-neutral-200 border-stone-200 dark:border-neutral-700 hover:border-orange-300 dark:hover:border-neutral-600 hover:bg-stone-50 dark:hover:bg-neutral-750'
+                  ? 'bg-sage-600 text-white border-sage-600 shadow-md shadow-sage-600/20 ring-2 ring-sage-500/20'
+                  : 'bg-white dark:bg-forest-850 text-sage-800 dark:text-sage-200 border-sage-200 dark:border-forest-750 hover:border-sage-400 hover:bg-sage-50 dark:hover:bg-forest-800'
               }`}
             >
-              <span className={isSelected ? 'text-white' : 'text-orange-600 dark:text-orange-400'}>
+              <span className={isSelected ? 'text-white' : 'text-sage-600 dark:text-sage-400'}>
                 {getIcon(cat.id)}
               </span>
               <span>{cat.name}</span>
               <span
-                className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
+                className={`text-[11px] px-2 py-0.5 rounded-full font-bold ${
                   isSelected
-                    ? 'bg-white/20 text-white'
-                    : 'bg-stone-100 dark:bg-neutral-700 text-stone-600 dark:text-neutral-300'
+                    ? 'bg-white/25 text-white'
+                    : 'bg-sage-100 dark:bg-forest-800 text-sage-700 dark:text-sage-300'
                 }`}
               >
                 {count}
