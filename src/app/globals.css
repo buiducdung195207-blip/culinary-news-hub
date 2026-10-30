@@ -4,42 +4,81 @@
 
 @layer base {
   body {
-    @apply bg-stone-50 text-stone-900 transition-colors duration-200;
+    background-color: #FAF8F5;
+    color: #26211C;
+    font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
   .dark body {
-    @apply bg-neutral-950 text-neutral-100;
+    background-color: #12100E;
+    color: #EDE8E3;
   }
 }
 
-/* Custom scrollbar */
+/* Subtle paper texture noise */
+.paper-texture {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.dark .paper-texture {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Drop-cap for editorial first paragraph */
+.editorial-dropcap::first-letter {
+  font-family: Georgia, 'Times New Roman', serif;
+  float: left;
+  font-size: 4.2rem;
+  line-height: 0.8;
+  margin-top: 0.1em;
+  margin-right: 0.15em;
+  font-weight: 700;
+  color: #C2410C;
+}
+
+.dark .editorial-dropcap::first-letter {
+  color: #F97316;
+}
+
+/* Custom editorial scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
+  background: #D6CEC5;
+  border-radius: 999px;
 }
 .dark ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #3B332B;
 }
 
-/* Reader Mode Theme Styles */
-.reader-theme-light {
-  background-color: #ffffff !important;
-  color: #1a1a1a !important;
+/* Typography polish */
+h1, h2, h3, .font-editorial {
+  letter-spacing: -0.025em;
 }
 
-.reader-theme-sepia {
-  background-color: #f7f3eb !important;
-  color: #2e261f !important;
+/* Reader Mode Custom Palette */
+.reader-theme-linen {
+  background-color: #FDFBF7 !important;
+  color: #2B231A !important;
+  border-color: #EBE3D7 !important;
 }
 
-.reader-theme-dark {
-  background-color: #121212 !important;
-  color: #e5e5e5 !important;
+.reader-theme-paper {
+  background-color: #FFFFFF !important;
+  color: #1A1816 !important;
+  border-color: #E5E1DB !important;
+}
+
+.reader-theme-espresso {
+  background-color: #14110E !important;
+  color: #E8E2D9 !important;
+  border-color: #2B241E !important;
 }
