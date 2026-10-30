@@ -1,0 +1,31 @@
+{
+  "framework": "nextjs",
+  "headers": [
+    {
+      "source": "/api/feed",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=300, stale-while-revalidate=600"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "public, s-maxage=300, stale-while-revalidate=600"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "public, s-maxage=300, stale-while-revalidate=600"
+        }
+      ]
+    },
+    {
+      "source": "/api/reader",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=3600, stale-while-revalidate=7200"
+        }
+      ]
+    }
+  ]
+}
